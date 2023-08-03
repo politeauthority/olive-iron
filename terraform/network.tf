@@ -37,7 +37,7 @@ resource "aws_nat_gateway" "nat" {
   }
 }
 
-/* Public subnet */
+/* Public subnets */
 resource "aws_subnet" "public_subnet" {
   vpc_id                  = aws_vpc.vpc.id
   count                   = length(var.public_subnets_cidr)
@@ -51,7 +51,7 @@ resource "aws_subnet" "public_subnet" {
   }
 }
 
-/* Private subnet */
+/* Private subnets */
 resource "aws_subnet" "private_subnet" {
   vpc_id                  = aws_vpc.vpc.id
   count                   = length(var.private_subnets_cidr)
