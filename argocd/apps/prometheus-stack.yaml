@@ -1,18 +1,22 @@
+# Prometheus Stack
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: argocd
+  name: prometheusstack
 spec:
   project: default
   source:
     repoURL: 'git@github.com:politeauthority/olive-iron.git'
-    path: argocd
-    targetRevision: main
+    path: services/prometheus-stack/
+    targetRevision: monitoring
+    helm:
+      valueFiles:
+        - values-olive-iron.yaml
+  sources: []
   destination:
-    namespace: argocd
+    namespace: monitoring
     name: in-cluster
   syncPolicy:
-    automated:
-      prune: true
     syncOptions:
       - CreateNamespace=true
+      - ServerSideApply=true

@@ -7,7 +7,7 @@ spec:
   source:
     repoURL: 'git@github.com:politeauthority/olive-iron.git'
     path: services/ingress-public
-    targetRevision: initial-apps
+    targetRevision: main
     helm:
       valueFiles:
         - values-olive-iron.yaml
