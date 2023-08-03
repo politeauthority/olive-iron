@@ -1,0 +1,16 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: certmanager
+spec:
+  project: default
+  source:
+    repoURL: 'git@github.com:politeauthority/olive-iron.git'
+    path: services/cert-manager
+    targetRevision: initial-apps
+  destination:
+    namespace: cert-manager
+    name: in-cluster
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true

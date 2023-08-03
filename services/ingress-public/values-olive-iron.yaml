@@ -1,0 +1,11 @@
+ingress-nginx:
+  controller:
+    ingressClass: nginx-public
+    ingressClassResource:
+      name: nginx-public
+    # metrics:
+    #   enabled: true
+    #   serviceMonitor:
+    #     enabled: true
+    #     additionalLabels:
+    #       prometheus: prometheus
