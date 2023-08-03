@@ -3,3 +3,8 @@
 .terraform.lock.hcl
 terraform.tfstate
 terraform.tfstate.backup
+
+# Helm Ignores
+charts/
+Chart.lock
+Chart.yaml
