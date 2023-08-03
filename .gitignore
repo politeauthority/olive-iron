@@ -7,4 +7,3 @@ terraform.tfstate.backup
 # Helm Ignores
 charts/
 Chart.lock
-Chart.yaml
