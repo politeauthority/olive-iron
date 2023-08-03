@@ -24,13 +24,13 @@ kube-prometheus-stack:
         prometheus: prometheus
     prometheusSpec:
       retention: 30d
-      storageSpec: 
-        volumeClaimTemplate:
-          spec:
-            accessModes: ["ReadWriteOnce"]
-            resources:
-              requests:
-                storage: 10Gi
+      # storageSpec: 
+      #   volumeClaimTemplate:
+      #     spec:
+      #       accessModes: ["ReadWriteOnce"]
+      #       resources:
+      #         requests:
+      #           storage: 10Gi
       serviceMonitorSelector:
         matchLabels:
           prometheus: prometheus
