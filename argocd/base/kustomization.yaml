@@ -3,4 +3,3 @@ kind: Kustomization
 namespace: argocd
 resources:
   - upstream.yaml
-  # - github.com/argoproj/argo-cd/manifests/ha/base?ref=v2.6.2

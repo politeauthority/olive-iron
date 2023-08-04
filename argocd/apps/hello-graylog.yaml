@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: hellograylog
+spec:
+  project: default
+  source:
+    repoURL: 'git@github.com:politeauthority/olive-iron.git'
+    path: services/hello-graylog
+    targetRevision: main
+  destination:
+    namespace: hello-graylog
+    name: in-cluster
+  syncPolicy:
+    automated:
+      prune: true
+    syncOptions:
+      - CreateNamespace=true
