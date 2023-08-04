@@ -4,3 +4,4 @@ resources:
   - ./argocd.yaml
   - ./cert-manager.yaml
   - ./ingress-public.yaml
+  - ./prometheus-stack.yaml

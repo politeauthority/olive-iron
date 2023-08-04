@@ -7,10 +7,12 @@ spec:
   source:
     repoURL: 'git@github.com:politeauthority/olive-iron.git'
     path: services/cert-manager
-    targetRevision: initial-apps
+    targetRevision: main
   destination:
     namespace: cert-manager
     name: in-cluster
   syncPolicy:
+    automated:
+      prune: true
     syncOptions:
       - CreateNamespace=true
