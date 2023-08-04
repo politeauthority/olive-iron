@@ -7,7 +7,7 @@ spec:
   source:
     repoURL: 'git@github.com:politeauthority/olive-iron.git'
     path: services/hello-graylog
-    targetRevision: main
+    targetRevision: hpa
   destination:
     namespace: hello-graylog
     name: in-cluster

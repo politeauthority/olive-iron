@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: hello-graylog
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+spec:
+  ingressClassName: nginx-public
+  rules:
+  - host: hello-graylog.alix.lol
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: hello-graylog
+            port:
+              name: http
+  tls:
+  - hosts:
+    - hello-graylog.alix.lol
+    secretName: hello-graylog-alix-lol-tls

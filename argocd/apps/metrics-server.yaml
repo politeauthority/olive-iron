@@ -1,24 +1,18 @@
-# Prometheus Stack
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: prometheusstack
+  name: metricsserver
 spec:
   project: default
   source:
     repoURL: 'git@github.com:politeauthority/olive-iron.git'
-    path: services/prometheus-stack/
-    targetRevision: main
-    helm:
-      valueFiles:
-        - values-olive-iron.yaml
-  sources: []
+    path: services/metrics-server
+    targetRevision: hpa
   destination:
-    namespace: monitoring
+    namespace: kube-system
     name: in-cluster
   syncPolicy:
     automated:
       prune: true
     syncOptions:
       - CreateNamespace=true
-      - ServerSideApply=true
