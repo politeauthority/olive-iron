@@ -5,3 +5,4 @@ resources:
   - ./cert-manager.yaml
   - ./ingress-public.yaml
   - ./prometheus-stack.yaml
+  - ./hello-graylog.yaml
