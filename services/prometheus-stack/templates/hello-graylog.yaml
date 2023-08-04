@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    grafana_dashboard: "1"
+  name: grafana-q-media
+data:
+  grafana-hello-graylog-json: |-
+{{ .Files.Get "dashboards/hello-graylog.json" | indent 4}}

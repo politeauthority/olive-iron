@@ -1,0 +1,23 @@
+kube-prometheus-stack:
+
+  alertmanager:
+    enabled: false
+
+  grafana:
+    ingress:
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+      enabled: true
+      ingressClassName: nginx-public
+      hosts:
+        - grafana.alix.lol
+      path: /
+      tls:
+      - secretName: grafana-tls
+        hosts:
+        - grafana.alix.lol
+    env:
+      GF_FEATURE_TOGGLES_ENABLE: "publicDashboards"
+  prometheus:
+    prometheusSpec:
+      retention: 30d
