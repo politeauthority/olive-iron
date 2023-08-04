@@ -7,7 +7,7 @@ spec:
   source:
     repoURL: 'git@github.com:politeauthority/olive-iron.git'
     path: services/metrics-server
-    targetRevision: hpa
+    targetRevision: main
   destination:
     namespace: kube-system
     name: in-cluster

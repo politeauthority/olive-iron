@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   labels:
     grafana_dashboard: "1"
-  name: grafana-q-media
+  name: grafana-hello-graylog
 data:
   grafana-hello-graylog-json: |-
 {{ .Files.Get "dashboards/hello-graylog.json" | indent 4}}

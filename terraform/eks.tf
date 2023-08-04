@@ -93,8 +93,15 @@ resource "aws_eks_node_group" "worker-node-group" {
     cluster_name    = "${var.project}"
     node_group_name = "${var.project}-workernodes"
     node_role_arn   = aws_iam_role.workernodes.arn
-    subnet_ids      = [aws_subnet.private_subnet[0].id, aws_subnet.public_subnet[0].id]
-    instance_types  = ["t3.xlarge"]
+    subnet_ids      = [
+        aws_subnet.private_subnet[0].id, 
+        aws_subnet.private_subnet[1].id,
+        aws_subnet.private_subnet[2].id,
+        aws_subnet.public_subnet[0].id,
+        aws_subnet.public_subnet[1].id,
+        aws_subnet.public_subnet[2].id,
+    ]
+    instance_types  = ["m5.large"]
  
     scaling_config {
         desired_size = 3
