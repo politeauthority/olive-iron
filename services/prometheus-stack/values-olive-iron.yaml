@@ -16,7 +16,8 @@ kube-prometheus-stack:
       - secretName: grafana-tls
         hosts:
         - grafana.alix.lol
-
+    env:
+      GF_FEATURE_TOGGLES_ENABLE: "publicDashboards"
   prometheus:
     prometheusSpec:
       retention: 30d
