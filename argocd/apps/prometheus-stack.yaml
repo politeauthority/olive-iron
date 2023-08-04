@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: 'git@github.com:politeauthority/olive-iron.git'
     path: services/prometheus-stack/
-    targetRevision: monitoring
+    targetRevision: main
     helm:
       valueFiles:
         - values-olive-iron.yaml
