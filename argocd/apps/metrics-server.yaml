@@ -9,7 +9,7 @@ spec:
     path: services/metrics-server
     targetRevision: hpa
   destination:
-    namespace: metrics-server
+    namespace: kube-system
     name: in-cluster
   syncPolicy:
     automated:
