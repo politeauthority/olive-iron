@@ -6,3 +6,4 @@ resources:
   - ./ingress-public.yaml
   - ./prometheus-stack.yaml
   - ./hello-graylog.yaml
+  - ./metrics-server.yaml

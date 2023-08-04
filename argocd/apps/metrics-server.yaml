@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: metricsserver
+spec:
+  project: default
+  source:
+    repoURL: 'git@github.com:politeauthority/olive-iron.git'
+    path: services/metrics-server
+    targetRevision: hpa
+  destination:
+    namespace: metrics-server
+    name: in-cluster
+  syncPolicy:
+    automated:
+      prune: true
+    syncOptions:
+      - CreateNamespace=true
