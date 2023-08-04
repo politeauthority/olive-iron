@@ -9,19 +9,19 @@
  - Elastic IP
  - 3 public subnets across 3 AZs
  - 3 private subnets across 3 AZs
+ - 3 EC2 worker nodes with the machine type `m5.large"`
 
 ## Installing From Scratch
 ### Intial Steps
 Clone and rehost to an available git host, or fork this repo on github.
 There are a handful of local tools required to make use of this project. I've included my local versions, however in some instances lower versions may work, and higher versions *should* work.
- - Terraform v1.5.4
+ - terraform v1.5.4
  - aws-cli v2.8.6
- - kubectl
- - kubeseal
- - kustomize
- - helm
+ - kubectl v1.27
+ - kustomize v5.1.0
+ - helm v3.9.4
 
-### Create Infra
+### Create the Infrastructure
 Create the intial infrastructure. This will deploy our EKS cluster along with all the required
 networking. Currenty we're configured to deploy 3 `t3.xlarge` worker nodes.
 ```console
@@ -32,7 +32,7 @@ terraform apply -var-file olive-iron.tfvars
 ℹ️ Terraform apply runs about 12 minutes
 ℹ️ Terraform destroy is about 10 minutes
 
-### Cluster
+### Create the Cluster Applications
 Get the cluster config. The `<region>` and  `<project>` will be the project name you set in your [Terraform Vars](terraform/olive-iron.tfvars)
 ```bash
 cp ~/.kube/config ~/.kube/config.bak # Let's make a back-up, just in case.
@@ -40,34 +40,8 @@ aws eks update-kubeconfig --region <region> --name <project>
 ```
 More details on kubeconfig generation on [AWS's Docs](https://docs.aws.amazon.com/eks/latest/userguide/create-kubeconfig.html)
 
-#### Installing Sealed Secrets
-Sealed-Secrets allows us to store secrets in git without them being exposed. Because this is needed for many
-ArgoCD projects, we install this outside of ArgoCD, and run the helm install manually. More information on Sealed-Secrets at https://github.com/bitnami-labs/sealed-secrets
-
-##### Installing in the Cluster
-```bash
-helm repo add sealed-secrets https://bitnami-labs.github.io/sealed-secrets
-helm install sealed-secrets \
-    -n kube-system \
-    --set-string fullnameOverride=sealed-secrets-controller \
-    sealed-secrets/sealed-secrets
-```
-ℹ️ Existing secrets will have to be regenerated anytime the KubeSeal controller is brought in new to a cluster.
-
-##### Creating a Sealed Secret
-```bash
-kubectl \
-    create secret generic \
-    <secret-name> \
-    --dry-run=client \
-    --from-literal=foo=bar -o yaml | \
-    kubeseal \
-    --controller-name=sealed-secrets-controller \
-    --controller-namespace=kube-system \
-    --format yaml > mysealedsecret.yaml
-```
-
-#### Installing ArgoCD
+#### Installing ArgoCD and Initial Apps
+Here we will launch ArgoCD, Cert
  - Create the `argocd` namespace and install the base ArgoCD application.
 ```bash
 cd argocd/base
@@ -84,10 +58,27 @@ kubectl port-forward svc/argocd-server 9001:443
 cd argocd/
 kustomize build . | kubectl apply -f -
 ```
+ - At this point ArgoCD will start auto deployng the following applications.
+   - Cert Manager
+   - Ingress Nginx
+   - Metrics
+
+
+#### Setup DNS and Ingress
+Since the Ingress controller is deployed as a `LoadBalancer` type, we'll need to grab that EC2 Load Balancer address and use that to setup a CNAME record. [External DNS](https://github.com/kubernetes-sigs/external-dns) would be a great tool for this, but for time's sake I've decided to do this part without it.
+
+```bash
+kubectl get svc -n ingress-public ingresspublic-ingress-nginx-controller -oyaml | yq
+```
+@todo
+
+#### Monitoring
+@todo
+hit the ArgoCD APP
 
 # ToDos
  - Spell check README
 
 # Warnings/ Notes
 - Cert-manager will get angry with issuers coming in at the same time as the CRDS for issuers
-- Ingress LB VS TF LB
+- Ingress LB VS TF LB @todo
