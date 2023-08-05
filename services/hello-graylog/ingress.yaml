@@ -7,7 +7,7 @@ metadata:
 spec:
   ingressClassName: nginx-public
   rules:
-  - host: hello-graylog.alix.lol
+  - host: graylog.alix.lol
     http:
       paths:
       - path: /
@@ -19,5 +19,5 @@ spec:
               name: http
   tls:
   - hosts:
-    - hello-graylog.alix.lol
-    secretName: hello-graylog-alix-lol-tls
+    - graylog.alix.lol
+    secretName: graylog-alix-lol-tls
